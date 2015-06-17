@@ -14,11 +14,10 @@ import Dispatch
  *
  * PassiveSockets are 'listening' sockets, ActiveSockets are open connections.
  */
-public class Socket<T: SocketAddress> {
+public class Socket<T: SocketAddress> : UnixFileHandleType {
   
   public var fd           : Int32?  = nil
   public var boundAddress : T?      = nil
-  public var isValid      : Bool { return fd           != nil }
   public var isBound      : Bool { return boundAddress != nil }
   
   var closeCB  : ((Int32) -> Void)? = nil
