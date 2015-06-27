@@ -148,12 +148,12 @@
 			isa = PBXGroup;
 			children = (
 				E88984B9194A751E00A831A3 /* ARISockets.h */,
-				E85D92E51B3EB8E300DAAF9E /* SocketType.swift */,
 				E8305D72194B06E20073740A /* Socket.swift */,
 				E8305D73194B06E20073740A /* SocketAddress.swift */,
 				E8305D71194B06E20073740A /* PassiveSocket.swift */,
 				E8305D70194B06E20073740A /* ActiveSocket.swift */,
 				E8BB97881B317F2D00482B07 /* UnixFileHandleType.swift */,
+				E85D92E51B3EB8E300DAAF9E /* SocketType.swift */,
 				E8305D74194B06E20073740A /* UnixUtils.swift */,
 				E81DC1F71965A42600BD826B /* DNS.swift */,
 				E83305A4195B92D100CCBDF5 /* UnixBridge.c */,

@@ -17,26 +17,28 @@ public protocol UnixFileHandleType {
  
   mutating func close()
   
+  var flags         : Int32? { get set }
+  var isNonBlocking : Bool   { get set }
 }
 
 
 /* default implementations */
-/*
+
 public extension UnixFileHandleType {
 
   public var isValid : Bool { return fd != nil }
-  /*
+
   public mutating func close() {
     guard let cfd = fd else { return }
     guard cfd >= 0     else { return }
     Darwin.close(cfd)
     fd = nil
   }
-  */
-}
-*/
 
-public extension Socket { // fcntl() Flags
+}
+
+// Crashes when changed from Socket to UnixFileHandleType
+public extension UnixFileHandleType { // fcntl() Flags
   
   public var flags : Int32? {
     get {
