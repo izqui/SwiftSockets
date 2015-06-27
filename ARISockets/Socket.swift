@@ -14,12 +14,14 @@ import Dispatch
  *
  * PassiveSockets are 'listening' sockets, ActiveSockets are open connections.
  */
-public class Socket<T: SocketAddress> : UnixFileHandleType {
+public class Socket<T: SocketAddressType> : UnixFileHandleType {
   
   public var fd           : Int32?  = nil
+  public var isValid      : Bool { return fd != nil }
   public var boundAddress : T?      = nil
   public var isBound      : Bool { return boundAddress != nil }
   
+  // Note on PoP: those would need to be public for PoP, not nice.
   var closeCB  : ((Int32) -> Void)? = nil
   var closedFD : Int32?             = nil // for delayed callback
   
@@ -158,49 +160,6 @@ public class Socket<T: SocketAddress> : UnixFileHandleType {
       s += " \(boundAddress!)"
     }
     return s
-  }
-  
-}
-
-
-extension Socket { // Socket Flags
-  
-  public var flags : Int32? {
-    get {
-      let rc = ari_fcntlVi(fd!, F_GETFL, 0)
-      return rc >= 0 ? rc : nil
-    }
-    set {
-      let rc = ari_fcntlVi(fd!, F_SETFL, Int32(newValue!))
-      if rc == -1 {
-        print("Could not set new socket flags \(rc)")
-      }
-    }
-  }
-  
-  public var isNonBlocking : Bool {
-    get {
-      if let f = flags {
-        return (f & O_NONBLOCK) != 0 ? true : false
-      }
-      else {
-        print("ERROR: could not get non-blocking socket property!")
-        return false
-      }
-    }
-    set {
-      if newValue {
-        if let f = flags {
-          flags = f | O_NONBLOCK
-        }
-        else {
-          flags = O_NONBLOCK
-        }
-      }
-      else {
-        flags = flags! & ~O_NONBLOCK
-      }
-    }
   }
   
 }

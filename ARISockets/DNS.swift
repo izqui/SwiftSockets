@@ -7,7 +7,7 @@
 //
 import Darwin
 
-func gethoztbyname<T: SocketAddress>
+func gethoztbyname<T: SocketAddressType>
   (name : String, flags : Int32 = AI_CANONNAME,
    cb   : ( String, String?, T? ) -> Void)
 {
@@ -57,7 +57,7 @@ func gethoztbyname<T: SocketAddress>
  * TBD: The 'flags' has to be provided, otherwise the trailing closure is not
  *      detected right?
  */
-func gethostzbyname<T: SocketAddress>
+func gethostzbyname<T: SocketAddressType>
   (name : String, flags : Int32 = AI_CANONNAME,
    cb   : ( String, [ ( cn: String?, address: T? ) ]? ) -> Void
   ) -> Void

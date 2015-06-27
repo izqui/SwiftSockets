@@ -31,7 +31,7 @@ public typealias PassiveSocketIPv4 = PassiveSocket<sockaddr_in>
  *     print("All good, go ahead!")
  *   }
  */
-public class PassiveSocket<T: SocketAddress>: Socket<T> {
+public class PassiveSocket<T: SocketAddressType>: Socket<T> {
   
   public var backlog      : Int? = nil
   public var isListening  : Bool { return backlog != nil }

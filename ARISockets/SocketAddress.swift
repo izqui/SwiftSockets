@@ -93,7 +93,7 @@ extension in_addr: CustomStringConvertible {
     
 }
 
-public protocol SocketAddress {
+public protocol SocketAddressType {
   
   static var domain: Int32 { get }
   
@@ -102,7 +102,7 @@ public protocol SocketAddress {
   var len: __uint8_t { get }
 }
 
-extension sockaddr_in: SocketAddress {
+extension sockaddr_in: SocketAddressType {
   
   public static var domain = AF_INET // if you make this a let, swiftc segfaults
   public static var size   = __uint8_t(sizeof(sockaddr_in))
@@ -234,7 +234,7 @@ extension sockaddr_in: CustomStringConvertible {
   
 }
 
-extension sockaddr_in6: SocketAddress {
+extension sockaddr_in6: SocketAddressType {
   
   public static var domain = AF_INET6
   public static var size   = __uint8_t(sizeof(sockaddr_in6))
@@ -262,7 +262,7 @@ extension sockaddr_in6: SocketAddress {
   public var len: __uint8_t { return sockaddr_in6.size }
 }
 
-extension sockaddr_un: SocketAddress {
+extension sockaddr_un: SocketAddressType {
   // TBD: sockaddr_un would be interesting as the size of the structure is
   //      technically dynamic (embedded string)
   
@@ -341,7 +341,7 @@ extension addrinfo {
   public var addressIPv6 : sockaddr_in6? { return address() }
    */
   
-  public func address<T: SocketAddress>() -> T? {
+  public func address<T: SocketAddressType>() -> T? {
     guard ai_addr != nil else { return nil }
     guard ai_addr.memory.sa_family == sa_family_t(T.domain) else { return nil }
     
@@ -349,7 +349,7 @@ extension addrinfo {
     return aiptr.memory // copies the address to the return value
   }
   
-  public var dynamicAddress : SocketAddress? {
+  public var dynamicAddress : SocketAddressType? {
     guard hasAddress else { return nil }
     
     if ai_addr.memory.sa_family == sa_family_t(sockaddr_in.domain) {

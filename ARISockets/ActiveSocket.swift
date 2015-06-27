@@ -40,7 +40,7 @@ public typealias ActiveSocketIPv4 = ActiveSocket<sockaddr_in>
  *   socket.connect(sockaddr_in(address:"127.0.0.1", port: 80))
  *   socket.write("Ring, ring!\r\n")
  */
-public class ActiveSocket<T: SocketAddress>: Socket<T> {
+public class ActiveSocket<T: SocketAddressType>: Socket<T> {
   
   public var remoteAddress  : T?                 = nil
   public var queue          : dispatch_queue_t?  = nil
