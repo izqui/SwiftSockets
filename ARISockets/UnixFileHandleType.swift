@@ -10,12 +10,13 @@ import Darwin
 
 // Notes: All properties need to be public in the implementing class. Hm.
 
-public protocol UnixFileHandleType {
+// Note: due to 22418558 this must be marked as 'class'
+public protocol UnixFileHandleType : class {
 
   var fd      : Int32? { get set } // TBD: probably better >= 0
   var isValid : Bool   { get }
  
-  mutating func close()
+  func close()
   
   var flags         : Int32? { get set }
   var isNonBlocking : Bool   { get set }
@@ -28,7 +29,7 @@ public extension UnixFileHandleType {
 
   public var isValid : Bool { return fd != nil }
 
-  public mutating func close() {
+  public func close() {
     guard let cfd = fd else { return }
     guard cfd >= 0     else { return }
     Darwin.close(cfd)
