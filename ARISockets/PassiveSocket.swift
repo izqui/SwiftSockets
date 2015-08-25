@@ -83,7 +83,10 @@ public class PassiveSocket<T: SocketAddressType>: Socket<T> {
     guard rc == 0 else { return false }
     
     self.backlog       = backlog
+    
+    // Swift 0.2 beta 6: 'self' is immutable?!
     self.isNonBlocking = true
+    
     return true
   }
   
