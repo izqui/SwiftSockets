@@ -84,7 +84,8 @@ public class PassiveSocket<T: SocketAddressType>: Socket<T> {
     
     self.backlog       = backlog
     
-    // Swift 0.2 beta 6: 'self' is immutable?!
+    // Swift 0.2 beta 6: 'self' is immutable - if UnixFileHandleType is not
+    //                   marked as 'class' (Radar 22418558)
     self.isNonBlocking = true
     
     return true
