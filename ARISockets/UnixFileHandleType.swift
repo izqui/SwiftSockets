@@ -37,7 +37,6 @@ public extension UnixFileHandleType {
 
 }
 
-// Crashes when changed from Socket to UnixFileHandleType
 public extension UnixFileHandleType { // fcntl() Flags
   
   public var flags : Int32? {
