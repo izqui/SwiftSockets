@@ -46,7 +46,7 @@ public struct FileDescriptor: IntegerLiteralConvertible, NilLiteralConvertible {
   {
     let fd = sysOpen(path, flags)
     guard fd >= 0 else {
-      return ( POSIXError(rawValue: sysErrno)!, nil )
+      return (POSIXError(rawValue: sysErrno) as! ErrorType, nil)
     }
     
     return ( nil, FileDescriptor(fd) )
@@ -64,7 +64,7 @@ public struct FileDescriptor: IntegerLiteralConvertible, NilLiteralConvertible {
     
     let readCount = sysRead(fd, &buf, count)
     guard readCount >= 0 else {
-      return ( POSIXError(rawValue: sysErrno)!, nil )
+      return (POSIXError(rawValue: sysErrno) as! ErrorType, nil )
     }
     
     if readCount == 0 { return ( nil, [] ) } // EOF
@@ -86,7 +86,7 @@ public struct FileDescriptor: IntegerLiteralConvertible, NilLiteralConvertible {
     let writeCount = sysWrite(fd, buffer, lCount)
     
     guard writeCount >= 0 else {
-      return ( POSIXError(rawValue: sysErrno)!, 0 )
+      return (POSIXError(rawValue: sysErrno) as! ErrorType, 0 )
     }
     
     return ( nil, writeCount )
